@@ -1,0 +1,38 @@
+version: '3.8'  # Versão do docker-compose
+
+services:
+  app:  # Serviço da sua aplicação Node.js
+    build: .  # Usa o Dockerfile da raiz do projeto
+    ports:
+      - "3000:3000"  # Mapeia porta 3000 do host para 3000 do container (ajuste se necessário)
+    environment:
+      - NODE_ENV=production  # Define variável de ambiente
+      - DATABASE_URL=postgresql://user:senha@db:5432/meubanco  # URL do banco (ajuste para seu projeto)
+      - JWT_SECRET=um-segredo-bem-forte  # Exemplo de variável de ambiente
+    depends_on:
+      - db  # Garante que o banco suba antes do app
+    restart: unless-stopped  # Reinicia o container se cair (exceto se for parado manualmente)
+    volumes:
+      - .:/app  # (Opcional) Monta o código local dentro do container para hot reload em dev
+
+  db:  # Serviço do banco de dados PostgreSQL
+    image: postgres:15-alpine  # Usa imagem oficial do PostgreSQL (leve)
+    environment:
+      - POSTGRES_DB=meubanco      # Nome do banco (ajuste)
+      - POSTGRES_USER=user        # Usuário do banco (ajuste)
+      - POSTGRES_PASSWORD=senha   # Senha do banco (ajuste)
+    ports:
+      - "5432:5432"  # Mapeia porta do banco para acesso local
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volume para persistir dados do banco
+    restart: unless-stopped  # Reinicia o banco se cair
+
+volumes:
+  postgres_data:  # Volume nomeado para persistência dos dados do banco
+
+# DICAS:
+# - Substitua "user", "senha", "meubanco" pelos seus dados reais.
+# - O serviço "app" depende do "db" e só inicia depois que o banco estiver pronto.
+# - Use "docker-compose up --build" para subir tudo.
+# - Use "docker-compose down" para parar e remover os containers.
+# - O volume "postgres_data" garante que os dados do banco não se percam ao reiniciar.
