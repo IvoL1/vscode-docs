@@ -1,38 +1,40 @@
-version: '3.8'  # Versão do docker-compose
+version: "3.9" # Versão do Docker Compose. Use sempre a mais nova que puder.
 
 services:
-  app:  # Serviço da sua aplicação Node.js
-    build: .  # Usa o Dockerfile da raiz do projeto
-    ports:
-      - "3000:3000"  # Mapeia porta 3000 do host para 3000 do container (ajuste se necessário)
+  db: # Nome do serviço do banco de dados. Pode ser "db", "postgres", "meubanco", etc.
+    image: postgres:16-alpine # Imagem do Postgres. Pode trocar a versão, ex: "postgres:15", "postgres:16.1-alpine"
+    container_name: dev_postgres # Nome do container. Pode ser qualquer nome que quiser.
     environment:
-      - NODE_ENV=production  # Define variável de ambiente
-      - DATABASE_URL=postgresql://user:senha@db:5432/meubanco  # URL do banco (ajuste para seu projeto)
-      - JWT_SECRET=um-segredo-bem-forte  # Exemplo de variável de ambiente
-    depends_on:
-      - db  # Garante que o banco suba antes do app
-    restart: unless-stopped  # Reinicia o container se cair (exceto se for parado manualmente)
+      POSTGRES_DB: mydb # Nome do banco de dados que será criado. Você escolhe!
+      POSTGRES_USER: user # Nome do usuário do banco. Pode ser "user", "admin", "postgres", etc.
+      POSTGRES_PASSWORD: password # Senha do banco. Escolha uma senha forte!
+    ports:
+      - "5432:5432" # Porta do banco. O padrão é 5432, mas pode mudar se quiser.
     volumes:
-      - .:/app  # (Opcional) Monta o código local dentro do container para hot reload em dev
+      - postgres_data_dev:/var/lib/postgresql/data # Volume para guardar os dados do banco. O nome antes dos dois pontos é você quem escolhe.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d mydb"] # Checa se o banco está pronto. Troque "user" e "mydb" se mudar acima.
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped # Reinicia o container se der erro.
 
-  db:  # Serviço do banco de dados PostgreSQL
-    image: postgres:15-alpine  # Usa imagem oficial do PostgreSQL (leve)
+  app: # Nome do serviço da sua aplicação Node.js. Pode ser "app", "api", "backend", etc.
+    build: . # Diz para usar o Dockerfile da pasta atual. Pode mudar o caminho se quiser.
+    container_name: dev_app # Nome do container da aplicação.
     environment:
-      - POSTGRES_DB=meubanco      # Nome do banco (ajuste)
-      - POSTGRES_USER=user        # Usuário do banco (ajuste)
-      - POSTGRES_PASSWORD=senha   # Senha do banco (ajuste)
+      NODE_ENV: development # Ambiente de desenvolvimento. Para produção, troque para "production".
+      DATABASE_URL: postgres://user:password@db:5432/mydb # URL de conexão com o banco. Troque os dados conforme acima.
     ports:
-      - "5432:5432"  # Mapeia porta do banco para acesso local
+      - "3000:3000" # Porta da aplicação. Troque se sua app rodar em outra porta.
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # Volume para persistir dados do banco
-    restart: unless-stopped  # Reinicia o banco se cair
+      - ./:/usr/src/app # Monta o código do seu computador dentro do container. Assim, qualquer alteração aparece na hora!
+      - /usr/src/app/node_modules # Garante que as dependências do container não misturem com as do seu computador.
+    depends_on:
+      db:
+        condition: service_healthy # Só inicia a app quando o banco estiver pronto.
+    command: npm run dev # Comando para rodar a aplicação em modo dev. Pode ser "npm run dev", "nodemon src/index.js", etc.
+    restart: unless-stopped
 
 volumes:
-  postgres_data:  # Volume nomeado para persistência dos dados do banco
-
-# DICAS:
-# - Substitua "user", "senha", "meubanco" pelos seus dados reais.
-# - O serviço "app" depende do "db" e só inicia depois que o banco estiver pronto.
-# - Use "docker-compose up --build" para subir tudo.
-# - Use "docker-compose down" para parar e remover os containers.
-# - O volume "postgres_data" garante que os dados do banco não se percam ao reiniciar.
+  postgres_data_dev: # Nome do volume para guardar os dados do banco. Pode ser qualquer nome.
