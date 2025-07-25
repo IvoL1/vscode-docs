@@ -1,10 +1,11 @@
 {
+  // ✏️ Editor
   "editor.fontFamily": "MonoLisa, monospace",
-  "editor.fontSize": 14,
-  "editor.lineHeight": 25,
+  "editor.fontSize": 13,
+  "editor.lineHeight": 2.5,
   "editor.cursorStyle": "line",
-  "editor.minimap.enabled": false,
   "editor.lineNumbers": "on",
+  "editor.minimap.enabled": false,
   "editor.renderWhitespace": "none",
   "editor.renderLineHighlight": "none",
   "editor.wordWrap": "on",
@@ -15,14 +16,37 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.smoothScrolling": true,
   "editor.codeActionsOnSave": { "source.fixAll.eslint": "always" },
+  "editor.bracketPairColorization.enabled": false,
+  "editor.stickyScroll.enabled": false,
+  "editor.codeLens": false,
+  "editor.colorDecorators": false,
+  "editor.links": false,
+  "editor.matchBrackets": "never",
+  "editor.parameterHints.enabled": false,
+  "editor.lightbulb.enabled": "off",
+  "editor.hover.above": false,
+  "scm.diffDecorations": "none",
+  "editor.showFoldingControls": "never",
+  "editor.guides.indentation": true,
+  "editor.occurrencesHighlight": "off",
+  "editor.selectionHighlight": false,
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.overviewRulerBorder": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.cursorBlinking": "solid",
+  "eyecons.theme": "inherit",
+  "eyecons.folderColor": "yellow",
+  "eyecons.hidesExplorerArrows": true,
+  "explorer.compactFolders": false,
+  "editor.fontLigatures": true,
+  "editor.letterSpacing": 1.5,
 
-  "[prisma]": { "editor.defaultFormatter": "Prisma.prisma" },
-  "[yaml]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[dockerfile]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-
+  // 📄 Arquivos
   "files.autoSave": "off",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
   "files.exclude": {
     "node_modules": true,
     "dist": true,
@@ -37,51 +61,59 @@
     "tsconfig.json": false,
     "yarn.lock": true,
     ".dockerignore": true,
-    "Dockerfile": true
+    "Dockerfile": false,
+    "tsconfig.node.json": true,
+    "tsconfig.app.json": true,
+    "vite-env.d.ts": true
   },
-  "files.eol": "\n",
 
+  // 💻 Terminal
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorStyleInactive": "line",
   "terminal.integrated.scrollback": 100,
-  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
+  "terminal.integrated.fontFamily": "MonoLisa",
+  "terminal.integrated.shellIntegration.decorationsEnabled": "never",
+  "terminal.integrated.lineHeight": 1.5,
 
+  // 🖥️ Workbench & Janela
+  "workbench.startupEditor": "none",
+  "workbench.statusBar.visible": false,
+  "workbench.activityBar.location": "default",
+  "workbench.editor.showTabs": "multiple",
+  "workbench.panel.showLabels": false,
+  "workbench.tree.indent": 24,
+  "window.zoomLevel": 2,
+  "window.menuBarVisibility": "hidden",
+  "window.commandCenter": false,
+  "window.titleBarStyle": "custom",
+  "breadcrumbs.enabled": false,
+  "breadcrumbs.filePath": "off",
+  "explorer.confirmDelete": false,
+  "window.title": "⚡ zeus ⚡",
+
+  // 🔒 Segurança
+  "security.workspace.trust.banner": "never",
+  "security.workspace.trust.untrustedFiles": "open",
+
+  // 🧩 Extensões & Linguagens
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+
+  "[prisma]": { "editor.defaultFormatter": "Prisma.prisma" },
+  "[yaml]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[dockerfile]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+
+  // 🟦 TypeScript & JavaScript
   "typescript.tsdk": "node_modules/typescript/lib",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.suggest.autoImports": true,
 
-  "workbench.startupEditor": "none",
-  "workbench.statusBar.visible": false,
-  "workbench.activityBar.location": "default",
-  "workbench.editor.showTabs": "multiple",
-  "window.zoomLevel": 1.5,
-  "window.title": "${🐦‍⬛ Zeus}",
-  "window.menuBarVisibility": "hidden",
-  "window.commandCenter": false,
-  "breadcrumbs.enabled": false,
-  "breadcrumbs.filePath": "off",
-  "workbench.tree.indent": 16,
-
-  "security.workspace.trust.banner": "never",
-  "security.workspace.trust.untrustedFiles": "open",
-  "extensions.ignoreRecommendations": true,
-
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
-
-  "emmet.includeLanguages": {
-    "javascript": "javascriptreact",
-    "typescript": "typescriptreact"
-  },
-  "workbench.colorTheme": "Origamid Next",
-  "workbench.iconTheme": "eyecons",
-
+  // 📝 Spell Checker
   "cSpell.enabled": true,
   "cSpell.language": "en,pt",
   "cSpell.ignoreWords": [
@@ -99,18 +131,25 @@
     "postgres",
     "postgresql",
     "sqlite",
+    "tailwindcss",
     "treeify",
+    "verifyhash",
     "whatsapp",
     "zeus"
   ],
 
-  "editor.bracketPairColorization.enabled": false,
-  "editor.letterSpacing": 0.7,
-  "window.titleBarStyle": "custom",
-  "workbench.panel.showLabels": false,
-  "editor.stickyScroll.enabled": false,
+  // 📚 Markdown
   "markdown-preview-enhanced.codeBlockTheme": "github-dark.css",
   "markdown-preview-enhanced.previewTheme": "github-dark.css",
-  "terminal.integrated.shellIntegration.decorationsEnabled": "never",
-  "explorer.confirmDelete": false
+
+  // 🧩 Outros
+  "extensions.ignoreRecommendations": true,
+  "workbench.editor.editorActionsLocation": "hidden",
+  "workbench.layoutControl.enabled": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "explorer.confirmDragAndDrop": false,
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "workbench.colorTheme": "Japandi Nightfall",
+  "workbench.iconTheme": "eyecons"
 }
